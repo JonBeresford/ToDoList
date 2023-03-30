@@ -1,5 +1,6 @@
 ﻿using api.Common;
 using api.Message;
+using api.Models;
 using api.StorageLayer;
 using System;
 using System.Linq;
@@ -38,5 +39,15 @@ namespace api.tests.Services
 
         }
 
+        public async Task ChangeToDoState(IsDoneModel isDoneModel)
+        {           
+            if (await _storageProvider.UpdateIsDone(isDoneModel))
+            {
+                return;
+            }
+
+            //in a production app you'd inject an ILogger and a custom error handler to log the error and allow graceful continuation
+            throw new Exception("Error updating todo item");
+        }
     }
 }

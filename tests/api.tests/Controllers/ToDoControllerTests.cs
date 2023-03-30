@@ -2,7 +2,6 @@
 using Xunit;
 using api.Controllers;
 using Microsoft.AspNetCore.Mvc;
-using System.Linq;
 using api.tests.Services;
 using api.Message;
 using EFCoreInMemoryDbDemo;

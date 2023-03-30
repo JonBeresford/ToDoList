@@ -1,4 +1,5 @@
 ﻿using api.Message;
+using api.Models;
 using api.tests.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -38,6 +39,18 @@ namespace api.Controllers
             }
 
             await _todoService.AddToDoItem(sendMessage);
+            return Ok();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Put([FromBody] IsDoneModel isDoneModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            await _todoService.ChangeToDoState(isDoneModel);
             return Ok();
         }
     }
