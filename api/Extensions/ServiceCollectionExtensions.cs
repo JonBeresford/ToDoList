@@ -2,13 +2,12 @@
 using api.tests.Services;
 using EFCoreInMemoryDbDemo;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace api.Extensions
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddTwilio(this IServiceCollection services)
+        public static IServiceCollection AddToDoServices(this IServiceCollection services)
         {
             services.AddDbContext<StorageDbContext>();
             services.AddScoped<IStorageProvider, StorageProvider>();

@@ -1,13 +1,8 @@
 ﻿using api.Common;
-using api.Entities;
 using api.Message;
 using api.StorageLayer;
-using Microsoft.AspNetCore.Http;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Net.Security;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace api.tests.Services
@@ -29,21 +24,14 @@ namespace api.tests.Services
             return _storageProvider.GetToDoList();
         }
 
-        public async Task<string> AddToDoItem(IToDoItem item)
+        public async Task AddToDoItem(IToDoItem item)
         {
-            var messageModel = item as ToDoItemModel;
-
-            var messageResource = await MessageResource.CreateAsync(
-                body: item.Message,
-                from: new Twilio.Types.PhoneNumber(_fromNumber),
-                to: new Twilio.Types.PhoneNumber(_countryCode + messageModel.ToNumberStripped)
-            );
+            var todoModel = item as ToDoItemModel;     
 
             await _storageProvider.SaveAsync(item);
-            return messageResource.Sid;
-
+            
             //in a full app you'd inject an ILogger and log the error and allow graceful continuation
-            throw new Exception("Error sending sms");
+            throw new Exception("Error adding todo item");
 
         }
 

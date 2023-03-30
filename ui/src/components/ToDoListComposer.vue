@@ -1,17 +1,17 @@
 <template>
-  <v-container class="sms-composer">
+  <v-container class="todo-composer">
     <v-layout row wrap>
       <v-flex xs12>
-        <v-form v-model="valid" @submit.prevent="sendSms">
+        <v-form v-model="valid" @submit.prevent="addToDoItem">
           <v-text-field
-            v-model="twilioMsg.toPhoneNumber"
-            label="Mobile Number"
+            v-model="todo.name"
+            label="Item Name"
            ></v-text-field>
           <v-textarea
-             v-model="twilioMsg.message"
-            label="Sms Content"
+             v-model="todo.description"
+            label="Description"
           ></v-textarea>
-            <button type="submit">Send SMS</button>
+            <button type="submit">Add Item</button>
         </v-form>
       </v-flex>
     </v-layout>
@@ -25,23 +25,23 @@ axios.defaults.headers.post['Content-Type'] = 'application/json'
 axios.defaults.headers.post['Accept'] = '*/*'
 
 export default {
-  name: 'SmsComposer',
+  name: 'ToDoListComposer',
   data: () => ({
     valid: true,
-    twilioMsg: {
-      toPhoneNumber: '',
-      message: ''
+    toDo: {
+        name: '',
+        description: ''
     }
   }),
   methods: {
-    sendSms () {
-      axios.post('http://localhost:5000/api/sms', this.twilioMsg)
+      addToDoItem () {
+          axios.post('http://localhost:5000/api/todo', this.todo)
         .then(response => console.log(response))
         .catch(error => console.log(error))
 
-      this.twilioMsg = {
-        toPhoneNumber: '',
-        message: ''
+   this.todo = {
+        name: '',
+        description: ''
       }
     }
   }

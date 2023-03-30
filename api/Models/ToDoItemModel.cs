@@ -1,26 +1,19 @@
 ﻿using api.Common;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Globalization;
-using System.Linq;
 
 namespace api.Message
 {
     public class ToDoItemModel : IToDoItem, IValidatableObject
     {
         [Required]
-        public string ToPhoneNumber {get;set;}
+        public string Name { get; set; }
+
         [Required]
-        [MaxLength(160)]
-        public string Message {get;set;}
+        [MaxLength(150)]
+        public string Description { get; set; }
+        public bool IsDone { get; set; }     
 
-        public string ToNumberStripped => ToPhoneNumber.StartsWith("0") ? ToPhoneNumber[1..] : ToPhoneNumber;
-
-        public List<ValidationResult> ValidationErrors => _validationErrors;
-        public bool IsValid => GetIsValid();
-
-        private List<ValidationResult> _validationErrors;
 
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
@@ -29,40 +22,24 @@ namespace api.Message
             var results = new List<ValidationResult>();
 
             // some other random test
-            if (string.IsNullOrEmpty(ToPhoneNumber))
+            if (string.IsNullOrEmpty(Name))
             {
-                results.Add(new ValidationResult("ToPhoneNumber must be populated"));
+                results.Add(new ValidationResult("Name must be populated"));
             }
 
            
-            if (!long.TryParse(ToPhoneNumber, out long _))
+            if (!long.TryParse(Description, out long _))
             {              
-                results.Add(new ValidationResult("ToPhoneNumber must be a number"));
+                results.Add(new ValidationResult("Description must be a number"));
             }
 
-            if (string.IsNullOrEmpty(Message))
-            {
-                results.Add(new ValidationResult("Message must be populated"));
-            }
 
-            if (Message.Length > 160)
+            if (Description.Length > 150)
             {
-                results.Add(new ValidationResult("Message can only be 160 characters maximum"));
+                results.Add(new ValidationResult("Description can only be 160 characters maximum"));
             }
 
             return results;
         }
-
-        private bool GetIsValid()
-        {
-            _validationErrors = new List<ValidationResult>();
-
-            return Validator.TryValidateObject(
-                this,
-                new ValidationContext(this, null, null),
-                _validationErrors,
-                false);
-        }
-
     }
 }

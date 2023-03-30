@@ -1,7 +1,7 @@
 ﻿using api.Common;
-using api.Entities;
+using api.Extensions;
+using api.Message;
 using EFCoreInMemoryDbDemo;
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -11,22 +11,17 @@ namespace api.StorageLayer
     {
         private readonly StorageDbContext _dbContext;
 
-        public StorageProvider(StorageDbContext dbContext
-        )
+        public StorageProvider(StorageDbContext dbContext)
         {
             _dbContext = dbContext;
         }
 
-        public async Task SaveAsync(IToDoItem message)
+        public async Task SaveAsync(IToDoItem todoItem)
         {
-            ToDoItemEntity entity = new()
-            {
-                ToPhoneNumber = message.ToPhoneNumber,
-                Message = message.Message,
-                SentDate = DateTime.Now
-            };
 
-            await _dbContext.TwilioMessageEntities!.AddAsync(entity);
+            var todoItemEntity = (todoItem as ToDoItemModel).ToEntitiy();
+
+            await _dbContext.ToDoItemEntities.AddAsync(todoItemEntity);
             await SaveAsync();
         }
 
@@ -37,7 +32,7 @@ namespace api.StorageLayer
 
         public IQueryable<IToDoItem> GetToDoList()
         {
-            return _dbContext.TwilioMessageEntities;
+            return _dbContext.ToDoItemEntities;
         }
     }
 }

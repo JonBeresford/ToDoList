@@ -5,12 +5,11 @@ namespace EFCoreInMemoryDbDemo
 {
     public class StorageDbContext : DbContext
     {
-        public DbSet<ToDoItemEntity> TwilioMessageEntities { get; set; }
+        public DbSet<ToDoItemEntity> ToDoItemEntities { get; set; }
 
-        protected override void OnConfiguring
-       (DbContextOptionsBuilder optionsBuilder)
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseInMemoryDatabase(databaseName: "SmsMessages");
+            optionsBuilder.UseInMemoryDatabase(databaseName: "ToDoList");
         }
        
        

@@ -12,31 +12,29 @@ using Moq;
 
 namespace api.tests.Controllers
 {
-    public class SmsControllerTests
+    public class ToDoControllerTests
     {
         private readonly IToDoService _toDoService;
         private readonly ToDoItemModel _toDoItemModel;
         private readonly IStorageProvider _storageProvider;
 
 
-        public SmsControllerTests()
-        {
-           
-           
+        public ToDoControllerTests()
+        {           
             _storageProvider = new StorageProvider(new StorageDbContext());
             _toDoService = new ToDoService(_storageProvider);
             _toDoItemModel = new ToDoItemModel
             {
-                ToPhoneNumber = "07984123556",
-                Message = "This is a test message"
+                Name = "item1",
+                Description = "This is a test todo item"
             };
         }
 
         [Fact]
-        public void Get_ReturnsActionResult_WithCollectionMessageObjects()
+        public void Get_ReturnsActionResult_WithCollectionItemObjects()
         {
-            var smsController = new ToDoController(_toDoService);
-            var result = smsController.Get(null);
+            var todoController = new ToDoController(_toDoService);
+            var result = todoController.Get(null);
 
             // Assert
             var viewResult = Assert.IsType<OkObjectResult>(result);
@@ -48,8 +46,8 @@ namespace api.tests.Controllers
         [Fact]
         public void Post_ReturnsActionResult_With200Status()
         {
-            var smsController = new ToDoController(_toDoService);
-            var result = smsController.Post(_toDoItemModel);
+            var todoController = new ToDoController(_toDoService);
+            var result = todoController.Post(_toDoItemModel);
 
             // Assert
             var viewResult = Assert.IsType<OkResult>(result);

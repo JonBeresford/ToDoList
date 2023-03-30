@@ -9,13 +9,16 @@ namespace api.Entities
         public int Id { get; set; }
 
         [Required]
-        public string ToPhoneNumber { get; set; }
+        public string Name { get; set; }
 
         [Required]
-        [MaxLength(160)]
-        public string Message { get; set; }
+        [MaxLength(150)]
+        public string Description { get; set; }
+
+        public bool IsDone { get; set; }
 
         [Required]
-        public DateTime SentDate { get; set; }
+        public DateTime AddedDate { get; set; }
+       
     }
 }

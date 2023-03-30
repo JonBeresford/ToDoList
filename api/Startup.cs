@@ -22,16 +22,12 @@ namespace api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddControllers();
             services.AddEndpointsApiExplorer();
             //go to https://localhost:5001/swagger for the swagger page
             services.AddSwaggerGen();
-            services.AddCors();       
-
-            services.AddTwilio();
-
-
+            services.AddCors();     
+            services.AddToDoServices();
         }
     
 
@@ -55,9 +51,6 @@ namespace api
                 .UseCors(options => options.SetIsOriginAllowed(x => _ = true).AllowAnyMethod().AllowAnyHeader().AllowCredentials())
                 .UseAuthorization()
                 .UseEndpoints(builder => builder.MapControllers());
-
-
-            //app.Build();
         }
     }
 }

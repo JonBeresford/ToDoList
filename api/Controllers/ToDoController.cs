@@ -1,10 +1,7 @@
-﻿using api.Common;
-using api.Entities;
-using api.Message;
+﻿using api.Message;
 using api.tests.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace api.Controllers
@@ -20,17 +17,13 @@ namespace api.Controllers
             _todoService = todoService;
         }
 
-        //I thought about using odata here but didn't have time
+        //I thought about using odata here
         //[EnableQuery] 
         [HttpGet]
         public IActionResult Get([FromQuery] DateTime? date)
         {
-            //normally you wouldn't directly return the entities and you'd use a DTO to return just the fields you want to expose
-            var messages = _todoService.GetToDoList();
-            if (date != null)
-            {
-                messages = messages.Where(m => (m as ToDoItemEntity).SentDate == date);
-            }
+            //normally you wouldn't directly return the entities and you'd use an intermediary DTO to return just the fields you want to expose
+            var messages = _todoService.GetToDoList();          
 
             return this.Ok(messages);
         }
@@ -44,8 +37,8 @@ namespace api.Controllers
                 return BadRequest(ModelState);
             }
 
-            var sid = await _todoService.AddToDoItem(sendMessage);
-            return Ok(sid);
+            await _todoService.AddToDoItem(sendMessage);
+            return Ok();
         }
     }
 }
