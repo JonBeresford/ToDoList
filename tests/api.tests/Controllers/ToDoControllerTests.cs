@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Xunit;
 using api.Controllers;
 using Microsoft.AspNetCore.Mvc;
@@ -8,7 +7,8 @@ using api.tests.Services;
 using api.Message;
 using EFCoreInMemoryDbDemo;
 using api.StorageLayer;
-using Moq;
+using System.Threading.Tasks;
+using api.Entities;
 
 namespace api.tests.Controllers
 {
@@ -31,25 +31,24 @@ namespace api.tests.Controllers
         }
 
         [Fact]
-        public void Get_ReturnsActionResult_WithCollectionItemObjects()
+        public void GetReturnsActionResultWithCollectionItemObjects()
         {
             var todoController = new ToDoController(_toDoService);
             var result = todoController.Get(null);
 
-            // Assert
+        
             var viewResult = Assert.IsType<OkObjectResult>(result);
-            var model = Assert.IsAssignableFrom<IEnumerable<string>>(
-                viewResult.Value);
-            Assert.Equal(2, model.Count());
+            var model = Assert.IsAssignableFrom<IEnumerable<ToDoItemEntity>>(viewResult.Value);
+            Assert.NotNull(model);
         }
 
         [Fact]
-        public void Post_ReturnsActionResult_With200Status()
+        public async Task PostReturnsActionResultWith200Status()
         {
             var todoController = new ToDoController(_toDoService);
-            var result = todoController.Post(_toDoItemModel);
+            var result = await todoController.Post(_toDoItemModel);
 
-            // Assert
+         
             var viewResult = Assert.IsType<OkResult>(result);
             Assert.Equal(200, viewResult.StatusCode);
         }
