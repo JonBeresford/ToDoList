@@ -7,6 +7,6 @@ namespace api.StorageLayer
     public interface IStorageProvider
     {
         IQueryable<IToDoItem>GetToDoList();
-        Task SaveAsync(IToDoItem todoItem);
+        Task<bool> SaveAsync(IToDoItem todoItem);
     }
 }

@@ -6,6 +6,7 @@ namespace api.Entities
 {
     public class ToDoItemEntity : IToDoItem
     {
+        [Key]
         public int Id { get; set; }
 
         [Required]

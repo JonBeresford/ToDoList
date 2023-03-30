@@ -26,11 +26,14 @@ namespace api.tests.Services
 
         public async Task AddToDoItem(IToDoItem item)
         {
-            var todoModel = item as ToDoItemModel;     
+            var todoModel = item as ToDoItemModel;
 
-            await _storageProvider.SaveAsync(item);
+            if (await _storageProvider.SaveAsync(todoModel))
+            {
+                return;
+            }  
             
-            //in a full app you'd inject an ILogger and log the error and allow graceful continuation
+            //in a production app you'd inject an ILogger and a custom error handler to log the error and allow graceful continuation
             throw new Exception("Error adding todo item");
 
         }

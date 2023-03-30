@@ -25,14 +25,8 @@ namespace api.Message
             if (string.IsNullOrEmpty(Name))
             {
                 results.Add(new ValidationResult("Name must be populated"));
-            }
-
-           
-            if (!long.TryParse(Description, out long _))
-            {              
-                results.Add(new ValidationResult("Description must be a number"));
-            }
-
+            }                     
+         
 
             if (Description.Length > 150)
             {

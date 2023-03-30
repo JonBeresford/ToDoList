@@ -16,18 +16,18 @@ namespace api.StorageLayer
             _dbContext = dbContext;
         }
 
-        public async Task SaveAsync(IToDoItem todoItem)
+        public async Task<bool> SaveAsync(IToDoItem todoItem)
         {
 
-            var todoItemEntity = (todoItem as ToDoItemModel).ToEntitiy();
+            var toDoItemEntity = (todoItem as ToDoItemModel).ToEntitiy();
 
-            await _dbContext.ToDoItemEntities.AddAsync(todoItemEntity);
-            await SaveAsync();
+            await _dbContext.ToDoItemEntities.AddAsync(toDoItemEntity);
+            return await SaveAsync() > 0;
         }
 
-        public async Task SaveAsync()
+        public async Task<int> SaveAsync()
         {
-            await _dbContext.SaveChangesAsync();
+           return await _dbContext.SaveChangesAsync();
         }
 
         public IQueryable<IToDoItem> GetToDoList()
