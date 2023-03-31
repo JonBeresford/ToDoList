@@ -24,25 +24,24 @@ namespace api.Controllers
         public IActionResult Get([FromQuery] DateTime? date)
         {
             //normally you wouldn't directly return the entities and you'd use an intermediary DTO to return just the fields you want to expose
-            var messages = _todoService.GetToDoList();          
-
-            return this.Ok(messages);
+            var toDoList = _todoService.GetToDoList();         
+            return this.Ok(toDoList);
         }
 
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] ToDoItemModel sendMessage)
+        public async Task<IActionResult> Post([FromBody] ToDoItemModel addItem)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            await _todoService.AddToDoItem(sendMessage);
+            await _todoService.AddToDoItem(addItem);
             return Ok();
         }
 
-        [HttpPost]
+        [HttpPut]
         public async Task<IActionResult> Put([FromBody] IsDoneModel isDoneModel)
         {
             if (!ModelState.IsValid)

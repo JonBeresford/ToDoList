@@ -1,12 +1,11 @@
 <template>
-  <div id="app">
-    <img alt="StaffCircle Logo" src="./assets/logo.png" class="app__logo" />
-    <div id="nav">
-      <router-link to="/">Send</router-link> |
-      <router-link to="/list">List</router-link>
+    <div id="app">
+        <img alt="NovaFori Logo" src="./assets/logo.png" class="app__logo" />
+        <div id="nav">
+            <router-link to="/">ToDo</router-link>
+        </div>
+        <router-view/>
     </div>
-    <router-view/>
-  </div>
 </template>
 <style lang="stylus">
 #app

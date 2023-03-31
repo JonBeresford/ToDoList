@@ -1,45 +1,40 @@
 <template>
-  <v-container class="todo-composer">
-    <v-layout row wrap>
-      <v-flex xs12>
-        <v-form v-model="valid" @submit.prevent="addToDoItem">
-          <v-text-field
-            v-model="todo.name"
-            label="Item Name"
-           ></v-text-field>
-          <v-textarea
-             v-model="todo.description"
-            label="Description"
-          ></v-textarea>
-            <button type="submit">Add Item</button>
-        </v-form>
-      </v-flex>
-    </v-layout>
-  </v-container>
+    <v-container class="todolist-composer">
+        <v-layout row wrap>
+            <v-flex xs12>
+                <v-form @submit.prevent="addToDoItem">
+                    <v-text-field v-model="todoItem.name"
+                                  label="Item Name"></v-text-field>
+                    <v-textarea v-model="todoItem.description"
+                                label="Description"></v-textarea>
+                    <button type="submit">Add Item</button>
+                </v-form>
+            </v-flex>
+        </v-layout>
+    </v-container>
 </template>
 
 <script>
 import axios from 'axios'
 
 axios.defaults.headers.post['Content-Type'] = 'application/json'
-axios.defaults.headers.post['Accept'] = '*/*'
+axios.defaults.headers.post.Accept = '*/*'
 
 export default {
   name: 'ToDoListComposer',
   data: () => ({
-    valid: true,
-    toDo: {
-        name: '',
-        description: ''
+    todoItem: {
+      name: '',
+      description: ''
     }
   }),
   methods: {
-      addToDoItem () {
-          axios.post('http://localhost:5000/api/todo', this.todo)
+    addToDoItem () {
+      axios.post('http://localhost:5000/api/todo', this.todoItem)
         .then(response => console.log(response))
         .catch(error => console.log(error))
 
-   this.todo = {
+      this.todoItem = {
         name: '',
         description: ''
       }
