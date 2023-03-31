@@ -1,4 +1,3 @@
-import '@babel/polyfill'
 import { createApp } from 'vue'
 import './plugins/vuetify'
 import App from './App.vue'
@@ -10,11 +9,13 @@ import { createVuetify } from 'vuetify'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
 import * as lists from 'vuetify/components/VList'
+import * as containers from 'vuetify/components/VGrid'
 
 const vuetify = createVuetify({
   components,
   directives,
-  lists
+  lists,
+  containers
 })
 
 const app = createApp(App)

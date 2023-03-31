@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <img alt="NovaFori Logo" src="./assets/logo.png" class="app__logo" />
+        <img alt="NovaFori Logo" :src="require('./assets/logo.png')" class="app__logo" />
         <div id="nav">
             <router-link to="/">ToDo</router-link>
         </div>

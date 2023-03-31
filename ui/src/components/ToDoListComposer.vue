@@ -1,7 +1,7 @@
 <template>
     <v-container class="todolist-composer">
         <v-layout row wrap>
-            <v-flex xs12>
+
                 <v-form @submit.prevent="addToDoItem">
                     <v-text-field v-model="todoItem.name"
                                   label="Item Name"></v-text-field>
@@ -9,7 +9,7 @@
                                 label="Description"></v-textarea>
                     <button type="submit">Add Item</button>
                 </v-form>
-            </v-flex>
+
         </v-layout>
     </v-container>
 </template>

@@ -3,8 +3,6 @@
         <v-card class="mx-auto"
                 max-width="500">
             <v-list shaped>
-                <v-list-item-group v-model="toDoItem"
-                                   multiple>
                     <template v-for="(item, i) in toDoList">
                         <v-divider v-if="!item"
                                    :key="`divider-${i}`"></v-divider>
@@ -14,10 +12,7 @@
                                      :value="item"
                                      active-class="deep-purple--text text--accent-4">
                             <template v-slot:default="{ active, toggle }">
-                                <v-list-item-content>
-                                    <v-list-item-title>item</v-list-item-title>
-                                </v-list-item-content>
-
+                                <v-list-item-title>item</v-list-item-title>
                                 <v-list-item-action>
                                     <v-checkbox :input-value="active"
                                                 :true-value="item"
@@ -27,7 +22,6 @@
                             </template>
                         </v-list-item>
                     </template>
-                </v-list-item-group>
             </v-list>
         </v-card>
     </v-container>
