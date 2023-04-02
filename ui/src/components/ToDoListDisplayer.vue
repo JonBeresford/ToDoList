@@ -1,30 +1,31 @@
 <template>
-    <v-container>
-        <v-card class="mx-auto"
-                max-width="500">
-            <v-list shaped>
-                    <template v-for="(item, i) in toDoList">
-                        <v-divider v-if="!item"
-                                   :key="`divider-${i}`"></v-divider>
-
-                        <v-list-item v-else
-                                     :key="`item-${i}`"
-                                     :value="item"
-                                     active-class="deep-purple--text text--accent-4">
-                            <template v-slot:default="{ active, toggle }">
-                                <v-list-item-title>item</v-list-item-title>
-                                <v-list-item-action>
-                                    <v-checkbox :input-value="active"
-                                                :true-value="item"
-                                                color="deep-purple accent-4"
-                                                @click="toggle"></v-checkbox>
-                                </v-list-item-action>
-                            </template>
-                        </v-list-item>
-                    </template>
-            </v-list>
-        </v-card>
-    </v-container>
+    <div class="container">
+        <h1>Pending Items</h1>
+        <div class="todo-list">
+            <div class="main">
+                <div v-for="item in pendingList"
+                     :key="item.id">
+                    {{ item.name }}  - {{ item.description }} :
+                    <input type="checkbox" v-model="item.isDone"
+                           :class="{ notclicked: !item.isDone, clicked: item.isDone }"
+                           @click="toggleClick(item)">
+                </div>
+            </div>
+        </div>
+        <div></div>
+        <h1>Done Items</h1>
+        <div class="todo-list">
+            <div class="main">
+                <div v-for="item in doneList"
+                     :key="item.id">
+                    {{ item.name }}  - {{ item.description }} :
+                    <input type="checkbox" v-model="item.isDone"
+                           :class="{ notclicked: !item.isDone, clicked: item.isDone }"
+                           @click="toggleClick(item)">
+                </div>
+            </div>
+        </div>
+    </div>
 </template>
 
 <script>
@@ -36,19 +37,22 @@ axios.defaults.headers.post.Accept = '*/*'
 export default {
   name: 'ToDoListDisplayer',
   data: () => ({
-    toDoList: [
-
-    ],
-    toDoItem: {
-      id: 0,
-      name: '',
-      description: '',
-      isDone: false
-    }
+    toDoList: [{ id: 0, name: 'fuck off', isDone: false }]
   }),
+  computed: {
+    doneList: function () {
+      return this.toDoList.filter(item => item.isDone === true)
+    },
+    pendingList: function () {
+      return this.toDoList.filter(item => item.isDone === false)
+    }
+  },
   methods: {
+    toggleClick (item) {
+      item.isDone = !item.isDone
+    },
     getToDoList () {
-      this.toDoList = axios.get('http://localhost:5000/api/todo')
+      return axios.get('http://localhost:5000/api/todo')
         .then(response => (this.toDoList = [...response.data]))
         .catch(error => console.log(error))
     }

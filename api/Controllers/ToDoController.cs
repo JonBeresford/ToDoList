@@ -25,7 +25,7 @@ namespace api.Controllers
         {
             //normally you wouldn't directly return the entities and you'd use an intermediary DTO to return just the fields you want to expose
             var toDoList = _todoService.GetToDoList();         
-            return this.Ok(toDoList);
+            return Ok(toDoList);
         }
 
 
